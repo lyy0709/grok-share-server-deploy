@@ -30,7 +30,6 @@ services:
     environment:
       TZ: Asia/Shanghai # 指定时区
       PROXY_URL: "http://proxy:8080/proxy" # 代理服务地址,支持http和https，socks5，没有则留空默认走本地
-      ORIGIN: "http://localhost:8300" # 本服务地址，如你的页面为https://xxx.com，这里就填写https://xxx.com
       CHATPROXY: "http://chatproxy:8080/proxy" # 网关配置，留空则不使用网关走本地代理
       # 内容审核及速率限制
       # AUDIT_LIMIT_URL: "http://auditlimit:8080/audit_limit"
