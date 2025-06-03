@@ -17,10 +17,10 @@ echo "生成的JWT secret: $JWT_SECRET"
 echo "更新配置文件中的JWT secret..."
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # macOS
-    sed -i '' "s/secret: \"grok-share-server\"/secret: \"$JWT_SECRET\"/" config.yaml
+    sed -i '' "s/secret: \"cool-admin-go\"/secret: \"$JWT_SECRET\"/" config.yaml
 else
     # Linux
-    sed -i "s/secret: \"grok-share-server\"/secret: \"$JWT_SECRET\"/" config.yaml
+    sed -i "s/secret: \"cool-admin-go\"/secret: \"$JWT_SECRET\"/" config.yaml
 fi
 
 docker compose pull
