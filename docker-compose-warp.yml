@@ -14,6 +14,9 @@ services:
       MYSQL_DATABASE: "cool" # 业务库名
       MYSQL_USER: "cool" # 业务库用户名
       MYSQL_PASSWORD: "123123" # 业务库密码
+    networks:
+      - internal_network 
+      
   redis:
     image: redis
     # command: --requirepass "12345678" # redis库密码,不需要密码注释本行
@@ -22,6 +25,9 @@ services:
       TZ: Asia/Shanghai # 指定时区
     volumes:
       - ./data/redis/:/data/
+    networks:
+      - internal_network 
+
   grok-share-server:
     image: lyy0709/grok-share-server:dev
     restart: always
@@ -37,3 +43,38 @@ services:
       - ./config.yaml:/app/config.yaml
       - ./data/grok-share-server/:/app/data/
       # - ./list.js:/app/resource/public/list.js
+    depends_on:
+      warp:
+        condition: service_healthy  # 只有 warp 的健康检查通过时，grok-share-server 才会启动
+    networks:
+      - internal_network
+
+  warp:
+    image: caomingjun/warp
+    container_name: warp
+    restart: always
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - WARP_SLEEP=5
+    cap_add:
+      - MKNOD
+      - AUDIT_WRITE
+      - NET_ADMIN
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv4.conf.all.src_valid_mark=1
+    volumes:
+      - ./warpdata:/var/lib/cloudflare-warp
+    networks:
+      - internal_network  # 使用内部网络，不对外暴露端口
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "https://www.google.com"]  # 静默模式下请求Google，如果成功返回2xx状态码
+      interval: 30s  # 每隔30秒检查一次
+      timeout: 10s   # 请求超时10秒
+      retries: 3     # 失败3次后标记为不健康
+      start_period: 5s  # 容器启动后等待5秒再开始检查
+
+networks:
+  internal_network:
+    driver: bridge  # 定义一个桥接网络
