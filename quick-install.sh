@@ -23,6 +23,8 @@ else
     sed -i "s/secret: \"grok-share-server\"/secret: \"$JWT_SECRET\"/" config.yaml
 fi
 
+cd grok-share
+
 docker compose pull
 docker compose up -d --remove-orphans
 
