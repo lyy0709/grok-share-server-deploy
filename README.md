@@ -6,7 +6,7 @@ grok-share-server的部署
 - 有代理可自备代理，如果有代理则可无需服务器直连grok
 - 一些grok账号以及ssotoken
 - 本项目不依赖网关
-- 如果遇到提示授权问题请及时拉更新
+- 如果遇到提示授权问题请及时拉更新，月底固定更新一次
 
 ## 更新日志
 - 20250920 对话获取账号方式改变，不再依赖为根据模型选择，在首页刷新即可随机切换可用次数最多的账号；修复了grok artifacts无法正常显示的问题
@@ -94,7 +94,7 @@ expireTime为用户剩余时间
 - https://github.com/xyhelper/chatgpt-share-server-deploy
 - https://github.com/xyhelper/chatgpt-mirror-server-deploy
 
-## 联系方式
+## 联系方式（咨询需付费，请仔细阅读 readme）
 ![](https://raw.githubusercontent.com/lyy0709/lyy0709/refs/heads/main/img/IMG_8139.jpeg)
 
 ## 免责声明
